@@ -1,0 +1,5 @@
+rootProject.name = 'virtual-shopping-plaza'
+include 'shopping-plaza-rest'
+include 'shopping-plaza-data'
+include 'shopping-plaza-client'
+include 'shopping-plaza-sql'
