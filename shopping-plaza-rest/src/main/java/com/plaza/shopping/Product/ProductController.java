@@ -1,6 +1,8 @@
 package com.plaza.shopping.Product;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +17,8 @@ public class ProductController {
 
     private final ProductService productService;
     @GetMapping("/products")
-    public List<Product> getProducts() {
-        return productService.findAll();
+    public Page<Product> getProducts(Pageable pageable) {
+        return productService.findAll(pageable);
     }
 
     @GetMapping("/products/id/{id}")
@@ -25,20 +27,20 @@ public class ProductController {
     }
 
     @GetMapping("/products/category/{categoryId}")
-    public List<Product> getProductsByCategoryId(@PathVariable final Long categoryId) {
-        return productService.findProductByCategoryId(categoryId);
+    public Page<Product> getProductsByCategoryId(@PathVariable final Long categoryId, Pageable pageable) {
+        return productService.findProductByCategoryId(categoryId, pageable);
     }
 
     @GetMapping("/products/search/{name}")
-    public List<Product> getProductsByName(@PathVariable final String name) {
-        return productService.findProductsByName(name);
+    public Page<Product> getProductsByName(@PathVariable final String name, Pageable pageable) {
+        return productService.findProductsByName(name, pageable);
     }
 
     // This Method will allow user to enter in the name via the url such as this url:
     // http://localhost:8080/api/shop/products/search/query?name=Mug
     @GetMapping("/products/search/query")
-    public List<Product> getProductsByQueryName(@RequestParam(value = "name", required = true) final String name) {
-        return productService.findProductsByName(name);
+    public Page<Product> getProductsByQueryName(@RequestParam(value = "name", required = true) final String name, Pageable pageable) {
+        return productService.findProductsByName(name, pageable);
     }
 
 }

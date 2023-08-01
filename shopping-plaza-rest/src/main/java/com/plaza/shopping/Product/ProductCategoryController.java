@@ -1,6 +1,8 @@
 package com.plaza.shopping.Product;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +19,8 @@ public class ProductCategoryController {
     private final ProductService productService;
 
     @GetMapping("/product-category")
-    public List<ProductCategory> getProductCategories() {
-        return productCatergoryService.findAll();
+    public Page<ProductCategory> getProductCategories(Pageable pageable) {
+        return productCatergoryService.findAll(pageable);
     }
 
     @GetMapping("/product-category/{Id}")

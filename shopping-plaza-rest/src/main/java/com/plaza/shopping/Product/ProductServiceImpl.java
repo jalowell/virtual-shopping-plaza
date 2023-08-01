@@ -1,6 +1,8 @@
 package com.plaza.shopping.Product;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,17 +19,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findAll() {
-        return productDao.findAll();
+    public Page<Product> findAll(Pageable pageable) {
+        return productDao.findAll(pageable);
     }
 
     @Override
-    public List<Product> findProductByCategoryId(Long Id) {
-        return productDao.findByCategory_Id(Id);
+    public Page<Product> findProductByCategoryId(Long Id, Pageable pageable) {
+        return productDao.findByCategory_Id(Id, pageable);
     }
 
     @Override
-    public List<Product> findProductsByName(String name) {
-        return productDao.findByNameContaining(name);
+    public Page<Product> findProductsByName(String name, Pageable pageable) {
+        return productDao.findByNameContaining(name, pageable);
     }
 }
