@@ -17,10 +17,20 @@ export class ProductService {
     return this.getProducts(this.baseUrl);
   }
 
-  getProductListByCategoryId(theCategoryId: number): Observable<Product[]> {
+  getProductsListPaginate(thePage: number, thePageSize: number): Observable<Product[]> {
+    return this.getProducts(this.baseUrl+`?page=${thePage}&size=${thePageSize}`);
+  }
+
+  getProductListByCategoryId(theCategoryId: number): Observable<ProductPage> {
     // Need to build URL based on category id
     const searchUrl= `${this.baseUrl}/category/${theCategoryId}`
-    return this.getProducts(searchUrl);
+    return this.httpClient.get<ProductPage>(searchUrl);
+  }
+
+  getProductListByCategoryIdPaginate(thePage: number, thePageSize: number, theCategoryId: number): Observable<ProductPage> {
+    // Need to build URL based on category id
+    const searchUrl= `${this.baseUrl}/category/${theCategoryId}?page=${thePage}&size=${thePageSize}`
+    return this.httpClient.get<ProductPage>(searchUrl);
   }
 
   searchProducts(keyword: string): Observable<Product[]> {
@@ -29,6 +39,7 @@ export class ProductService {
   }
 
   private getProducts(searchUrl: string) {
+    console.log(this.httpClient.get<Product[]>(searchUrl));
     return this.httpClient.get<Product[]>(searchUrl);
   }
 
@@ -38,4 +49,16 @@ export class ProductService {
   }
 
 
+}
+
+interface ProductPage {
+  content: Product[];
+  totalPages: number;
+  totalElements: number;
+  last: boolean;
+  size: number;
+  number: number;
+  first: boolean;
+  numberOfElements: number;
+  empty: boolean;
 }

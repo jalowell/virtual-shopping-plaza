@@ -14,8 +14,8 @@ export class ProductCategoryService {
   // Automatically injecting the HttpClient within this class to use. Using it to reach out to Springboot endpoint
   constructor(private httpClient: HttpClient) { }
 
-  getProductCategoryList(): Observable<ProductCategory[]> {
-    return this.httpClient.get<ProductCategory[]>(this.baseUrl);
+  getProductCategoryList(): Observable<GetResponseProductCategory> {
+    return this.httpClient.get<GetResponseProductCategory>(this.baseUrl);
   }
 
   getCategoryById(categoryId: number): Observable<ProductCategory[]> {
@@ -23,3 +23,33 @@ export class ProductCategoryService {
     return this.httpClient.get<ProductCategory[]>(searchUrl);
   }
 }
+
+interface GetResponseProductCategory {
+  content: ProductCategory[];
+  pageable: {
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    },
+    offset: number;
+    pageNumber: number;
+    pageSize: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  totalPages: number;
+  totalElements: number;
+  last: boolean;
+  size: number;
+  number: number;
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  first: boolean;
+  numberOfElements: number;
+  empty: boolean;
+}
+

@@ -11,6 +11,7 @@ import { ProductCategoryMenuComponent } from './components/product/product-categ
 import {ProductCategoryService} from "./components/product/product-category-menu/product-category.service";
 import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Routes = [
   {path: 'search/:keyword', component: ProductListComponent},
@@ -35,7 +36,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule
   ],
   providers: [ProductService, ProductCategoryService],
   bootstrap: [AppComponent]

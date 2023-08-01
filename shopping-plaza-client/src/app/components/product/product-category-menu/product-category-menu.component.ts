@@ -37,7 +37,7 @@ export class ProductCategoryMenuComponent implements OnInit {
       )
     } else {
       this.productCategoryService.getProductCategoryList().subscribe(categories => {
-          this.productCategories = categories;
+          this.productCategories = categories.content;
         }
       );
     }
