@@ -13,14 +13,16 @@ export class ProductService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getProductsList(): Observable<Product[]> {
-    return this.getProducts(this.baseUrl);
-  }
+  // BEFORE PAGINATION
+  // getProductsList(): Observable<Product[]> {
+  //   return this.getProducts(this.baseUrl);
+  // }
 
   getProductsListPaginate(thePage: number, thePageSize: number): Observable<Product[]> {
     return this.getProducts(this.baseUrl+`?page=${thePage}&size=${thePageSize}`);
   }
 
+  // BEFORE PAGINATION
   // getProductListByCategoryId(theCategoryId: number): Observable<ProductPage> {
   //   // Need to build URL based on category id
   //   const searchUrl= `${this.baseUrl}/category/${theCategoryId}`
