@@ -21,7 +21,6 @@ export class ProductCategoryMenuComponent implements OnInit {
     this.route.paramMap.subscribe(() => {
       this.listProductCategories();
       });
-    this.listProductCategories();
   }
 
   private listProductCategories() {
