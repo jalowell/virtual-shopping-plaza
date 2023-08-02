@@ -16,6 +16,7 @@ import java.util.Optional;
 public class ProductController {
 
     private final ProductService productService;
+
     @GetMapping("/products")
     public Page<Product> getProducts(Pageable pageable) {
         return productService.findAll(pageable);
