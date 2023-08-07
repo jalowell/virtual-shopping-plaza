@@ -13,6 +13,9 @@ import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartStatusComponent } from './components/cart/cart-status/cart-status.component';
+import { CartDetailsComponent } from './components/cart/cart-details/cart-details.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 const routes: Routes = [
   {path: 'search/:keyword', component: ProductListComponent},
@@ -22,6 +25,8 @@ const routes: Routes = [
   {path: 'products', component: ProductListComponent},
   {path: 'product-category/:id', component: ProductCategoryMenuComponent},
   {path: 'product-category', component: ProductCategoryMenuComponent},
+  {path: 'cart-details', component: CartDetailsComponent},
+  {path: 'checkout', component:CheckoutComponent},
   {path: '', redirectTo: 'products', pathMatch: 'full'}, // Add ErrorNoPageFound component
   {path: '**', redirectTo: 'products', pathMatch: 'full'} // Add PageDoesNotExist component
 ]
@@ -32,14 +37,17 @@ const routes: Routes = [
     ProductCategoryMenuComponent,
     SearchComponent,
     ProductDetailsComponent,
-    CartStatusComponent
+    CartStatusComponent,
+    CartDetailsComponent,
+    CheckoutComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule
   ],
   providers: [ProductService, ProductCategoryService],
   bootstrap: [AppComponent]
