@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {ShopFormService} from "../shopForm/shop-form.service";
 
 @Component({
   selector: 'app-checkout',
@@ -9,40 +10,57 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class CheckoutComponent implements OnInit {
 
   checkoutFormGroup: FormGroup = new FormGroup({});
+  totalPrice: number = 20.00;
+  totalQuantity: number = 20;
+  creditCardYears: number[] = [];
+  creditCardMonths: number[] = [];
 
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private shopFormService: ShopFormService) {
+  }
 
   ngOnInit(): void {
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
-        firstName:[''],
-        lastName:[''],
-        email:['']
+        firstName: [''],
+        lastName: [''],
+        email: ['']
       }),
       shippingAddress: this.formBuilder.group({
-        street:[''],
-        city:[''],
-        state:[''],
-        country:[''],
-        zipCode:['']
+        street: [''],
+        city: [''],
+        state: [''],
+        country: [''],
+        zipCode: ['']
       }),
       billingAddress: this.formBuilder.group({
-        street:[''],
-        city:[''],
-        state:[''],
-        country:[''],
-        zipCode:['']
+        street: [''],
+        city: [''],
+        state: [''],
+        country: [''],
+        zipCode: ['']
       }),
       creditCard: this.formBuilder.group({
-        cardType:[''],
-        nameOnCard:[''],
-        cardNumber:[''],
-        securityCode:[''],
-        expirationMonth:[''],
-        expirationYear:['']
+        cardType: [''],
+        nameOnCard: [''],
+        cardNumber: [''],
+        securityCode: [''],
+        expirationMonth: [''],
+        expirationYear: ['']
       })
     });
+
+    const startMonth: number = new Date().getMonth() + 1;
+    this.shopFormService.getCreditCardMonths(startMonth).subscribe(
+      data => {
+        this.creditCardMonths = data;
+      });
+
+    this.shopFormService.getCreditCardYears().subscribe(
+      data => {
+        this.creditCardYears = data;
+      });
+
   }
 
   onSubmit() {
@@ -51,11 +69,11 @@ export class CheckoutComponent implements OnInit {
   }
 
   copyShippingAddressToBillingAddress(event: any) {
-    if(event.target.checked) {
+    if (event.target.checked) {
       console.log("Copying shipping address to billing address");
       console.log(this.checkoutFormGroup.controls['shippingAddress'].value);
       this.checkoutFormGroup.controls['billingAddress']
-          .setValue(this.checkoutFormGroup.controls['shippingAddress'].value);
+        .setValue(this.checkoutFormGroup.controls['shippingAddress'].value);
     } else {
       this.checkoutFormGroup.controls['billingAddress'].reset();
     }
